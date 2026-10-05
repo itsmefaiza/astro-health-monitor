@@ -1,11 +1,14 @@
 import { Routes, Route, NavLink } from 'react-router-dom'
 import { useCrew } from './context/CrewContext'
 import Dashboard from './pages/Dashboard'
+import Health from './pages/Health'
 import Vitals from './pages/Vitals'
 import Radiation from './pages/Radiation'
-import Sleep from './pages/Sleep'
+import Sleep from './pages/sleep'
 import Wellness from './pages/Wellness'
+import Crew from './pages/Crew'
 import Alerts from './pages/Alerts'
+import Report from './pages/Report'
 
 export default function App() {
   const { crew, selected, setSelected } = useCrew()
@@ -20,11 +23,14 @@ export default function App() {
           {crew.map((c, i) => <option key={c.name} value={i}>{c.name}</option>)}
         </select>
         <NavLink to="/" end>Dashboard</NavLink>
+        <NavLink to="/health">Health status</NavLink>
         <NavLink to="/vitals">Vitals</NavLink>
         <NavLink to="/radiation">Radiation</NavLink>
         <NavLink to="/sleep">Sleep</NavLink>
         <NavLink to="/wellness">Wellness</NavLink>
+        <NavLink to="/crew">Crew overview</NavLink>
         <NavLink to="/alerts">Alerts</NavLink>
+        <NavLink to="/report">Report</NavLink>
       </nav>
       <main className="content">
         {alerting.length > 0 && (
@@ -34,11 +40,14 @@ export default function App() {
         )}
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/health" element={<Health />} />
           <Route path="/vitals" element={<Vitals />} />
           <Route path="/radiation" element={<Radiation />} />
           <Route path="/sleep" element={<Sleep />} />
           <Route path="/wellness" element={<Wellness />} />
+          <Route path="/crew" element={<Crew />} />
           <Route path="/alerts" element={<Alerts />} />
+          <Route path="/report" element={<Report />} />
         </Routes>
       </main>
     </div>
