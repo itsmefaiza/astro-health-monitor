@@ -8,13 +8,13 @@ export const LEVEL_COLORS = ['#4FE0B0', '#FFB84D', '#FF6B7A']
 export const LABELS = { hr: 'Heart rate', spo2: 'Blood oxygen', temp: 'Body temperature', sys: 'Blood pressure', rr: 'Respiration', rate: 'Radiation rate' }
 
 const CREW = [
-  { name: 'Amara Okafor', role: 'Commander', base: { hr: 66, spo2: 98, temp: 36.7, sys: 116, dia: 75, rr: 14 } },
-  { name: 'Ravi Menon', role: 'Flight Surgeon', base: { hr: 72, spo2: 97, temp: 36.8, sys: 122, dia: 79, rr: 15 } },
-  { name: 'Lena Fischer', role: 'Flight Engineer', base: { hr: 70, spo2: 98, temp: 36.6, sys: 112, dia: 72, rr: 16 } },
+  { name: 'Amara Okafor', role: 'Commander', base: { hr: 66, spo2: 98, temp: 36.7, sys: 116, dia: 75, rr: 14 }, sleep: [7.1, 6.8, 6.2, 7.4, 6.9, 7.0, 6.6] },
+  { name: 'Ravi Menon', role: 'Flight Surgeon', base: { hr: 72, spo2: 97, temp: 36.8, sys: 122, dia: 79, rr: 15 }, sleep: [6.0, 5.4, 6.1, 5.2, 5.8, 6.3, 5.5] },
+  { name: 'Lena Fischer', role: 'Flight Engineer', base: { hr: 70, spo2: 98, temp: 36.6, sys: 112, dia: 72, rr: 16 }, sleep: [7.5, 7.2, 7.8, 7.1, 7.4, 7.6, 7.3] },
 ]
 const NOISE = { hr: 1.6, spo2: 0.25, temp: 0.03, sys: 2, dia: 1.5, rr: 0.5, rate: 1.5 }
 // [alert range, watch range]
-const LIMITS = {
+export const LIMITS = {
   hr: [[50, 110], [55, 100]],
   spo2: [[92, 101], [95, 101]],
   temp: [[35.5, 38], [36, 37.5]],
@@ -48,7 +48,7 @@ const makeCrew = () =>
     levels: {},
     lv: 0,
     score: 100,
-    history: Array(40).fill(0).map(() => ({ hr: c.base.hr, spo2: c.base.spo2, temp: c.base.temp, sys: c.base.sys, rr: c.base.rr })),
+    history: Array(40).fill(0).map(() => ({ hr: c.base.hr, spo2: c.base.spo2, temp: c.base.temp, sys: c.base.sys, rr: c.base.rr, rate: 21 })),
   }))
 
 export function CrewProvider({ children }) {
@@ -74,7 +74,7 @@ export function CrewProvider({ children }) {
         }
         c.v.spo2 = Math.min(100, c.v.spo2)
         c.dose += c.v.rate / 5000
-        c.history = [...c.history.slice(1), { hr: c.v.hr, spo2: c.v.spo2, temp: c.v.temp, sys: c.v.sys, rr: c.v.rr }]
+        c.history = [...c.history.slice(1), { hr: c.v.hr, spo2: c.v.spo2, temp: c.v.temp, sys: c.v.sys, rr: c.v.rr, rate: c.v.rate }]
 
         const lv = {}
         ;['hr', 'spo2', 'temp', 'sys', 'rr'].forEach(k => (lv[k] = levelOf(k, c.v[k])))

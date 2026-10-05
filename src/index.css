@@ -29,3 +29,11 @@ ul { padding-left: 18px; } li { margin: 4px 0; }
   .layout { flex-direction: column; } .sidebar { width: 100%; }
   .hero { grid-template-columns: 1fr; } .big { font-size: 48px; }
 }
+.cards2 { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-top: 12px; }
+.stack { display: grid; gap: 12px; margin-top: 12px; }
+.pb { height: 12px; background: var(--line); border-radius: 6px; overflow: hidden; margin: 10px 0; }
+.pb i { display: block; height: 100%; background: var(--c); }
+.mood { font-size: 22px; }
+.mood[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+input[type="range"] { width: 100%; }
+.example { background: var(--bg); border: 1px dashed var(--line); border-radius: 10px; padding: 10px 12px; margin-top: 10px; font-size: 14px; line-height: 1.7; }
