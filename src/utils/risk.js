@@ -1,5 +1,6 @@
 import { LIMITS, LABELS } from '../context/CrewContext'
 import { deviations } from './baseline'
+import { symptomSummary } from './symptoms'
 
 export const MISSION_DAY = 112
 export const DOSE_LIMIT = 600 // mSv, career reference limit
@@ -104,6 +105,7 @@ export function assess(c) {
   const dev = deviations(c)
   const pHeart = personal(dev, ['hr', 'sys', 'spo2', 'rr'])
   const pImmune = personal(dev, ['temp'])
+  const sym = symptomSummary(c.name)
 
   const domains = [
     {
@@ -133,7 +135,16 @@ export function assess(c) {
       level: Math.max(sleepLevel, stressLevel),
       info: `Sleep ${avgSleep.toFixed(1)} h average · stress ${stress === null ? 'not logged' : stress + '/10'}`,
     },
-  ].map(d => ({ ...d, actions: ACTIONS[d.id][d.level] }))
+  ].map(d => {
+    const s = sym[d.id]
+    const level = s ? Math.max(d.level, s.level) : d.level
+    return {
+      ...d,
+      level,
+      info: d.info + (s ? ` · ${s.note}` : ''),
+      actions: [...ACTIONS[d.id][level], ...(s ? s.tips : [])],
+    }
+  })
 
   return { domains, overall: Math.max(...domains.map(d => d.level)), exercise, boneLoss }
 }

@@ -52,3 +52,6 @@ input[type="number"] { font: inherit; background: var(--panel); color: var(--tex
   .card { break-inside: avoid; border: 1px solid #999; }
 }
 button:disabled { opacity: 0.5; cursor: not-allowed; }
+.symrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); }
+.sev { padding: 4px 10px; font-size: 13px; }
+.sev[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
