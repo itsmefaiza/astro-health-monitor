@@ -9,7 +9,7 @@ import Wellness from './pages/Wellness'
 import Crew from './pages/Crew'
 import Alerts from './pages/Alerts'
 import Report from './pages/Report'
-
+import Baseline from './pages/Baseline'
 export default function App() {
   const { crew, selected, setSelected } = useCrew()
   const alerting = crew.filter(c => c.lv === 2)
@@ -24,6 +24,7 @@ export default function App() {
         </select>
         <NavLink to="/" end>Dashboard</NavLink>
         <NavLink to="/health">Health status</NavLink>
+        <NavLink to="/baseline">My baseline</NavLink>
         <NavLink to="/vitals">Vitals</NavLink>
         <NavLink to="/radiation">Radiation</NavLink>
         <NavLink to="/sleep">Sleep</NavLink>
@@ -48,6 +49,7 @@ export default function App() {
           <Route path="/crew" element={<Crew />} />
           <Route path="/alerts" element={<Alerts />} />
           <Route path="/report" element={<Report />} />
+          <Route path="/baseline" element={<Baseline />} />
         </Routes>
       </main>
     </div>

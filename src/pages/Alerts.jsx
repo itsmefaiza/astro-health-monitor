@@ -14,6 +14,7 @@ export default function Alerts() {
           <button onClick={() => simulate(selected, 'flare')}>Solar flare</button>
           <button onClick={() => simulate(selected, 'hypo')}>Low oxygen</button>
           <button onClick={() => simulate(selected, 'fever')}>Fever</button>
+                    <button onClick={() => simulate(selected, 'drift')}>Subtle drift</button>
         </div>
       </div>
 

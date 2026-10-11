@@ -25,6 +25,7 @@ const EVENTS = {
   flare: { rate: 560 },
   hypo: { spo2: -9, hr: 28, rr: 8 },
   fever: { temp: 1.7, hr: 22 },
+    drift: { hr: 14, sys: 10, rr: 3 },
 }
 
 const levelOf = (k, v) => {

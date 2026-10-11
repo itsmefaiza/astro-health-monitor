@@ -1,4 +1,5 @@
 import { LIMITS, LABELS } from '../context/CrewContext'
+import { deviations } from './baseline'
 
 export const MISSION_DAY = 112
 export const DOSE_LIMIT = 600 // mSv, career reference limit
@@ -74,6 +75,19 @@ const ACTIONS = {
   ],
 }
 
+// How far the chosen vitals are from this person's own normal
+const personal = (dev, keys) => {
+  const rows = dev.filter(d => keys.includes(d.k))
+  const worst = rows.reduce((a, d) => (Math.abs(d.z) > Math.abs(a.z) ? d : a), rows[0])
+  const digits = worst.k === 'temp' ? 1 : 0
+  return {
+    level: Math.max(...rows.map(d => d.level)),
+    note: worst.level > 0
+      ? `${worst.name} is ${Math.abs(worst.diff).toFixed(digits)} ${worst.unit} ${worst.diff > 0 ? 'above' : 'below'} your normal`
+      : '',
+  }
+}
+
 export function assess(c) {
   const L = c.levels
   const wellness = read('ahm-wellness')[c.name] || []
@@ -87,6 +101,10 @@ export function assess(c) {
   const sleepLevel = avgSleep < 6 ? 2 : avgSleep < 7 ? 1 : 0
   const stressLevel = stress === null ? 0 : stress >= 7 ? 2 : stress >= 5 ? 1 : 0
 
+  const dev = deviations(c)
+  const pHeart = personal(dev, ['hr', 'sys', 'spo2', 'rr'])
+  const pImmune = personal(dev, ['temp'])
+
   const domains = [
     {
       id: 'radiation', short: 'Radiation', title: 'Space radiation',
@@ -95,13 +113,13 @@ export function assess(c) {
     },
     {
       id: 'heart', short: 'Heart', title: 'Heart and circulation',
-      level: Math.max(L.hr || 0, L.sys || 0, L.spo2 || 0, L.rr || 0),
-      info: `HR ${Math.round(c.v.hr)} bpm · BP ${Math.round(c.v.sys)}/${Math.round(c.v.dia)} · SpO₂ ${c.v.spo2.toFixed(1)}%`,
+      level: Math.max(L.hr || 0, L.sys || 0, L.spo2 || 0, L.rr || 0, pHeart.level),
+      info: `HR ${Math.round(c.v.hr)} bpm · BP ${Math.round(c.v.sys)}/${Math.round(c.v.dia)} · SpO₂ ${c.v.spo2.toFixed(1)}%` + (pHeart.note ? ` · ${pHeart.note}` : ''),
     },
     {
       id: 'immune', short: 'Immune', title: 'Immune and infection',
-      level: L.temp || 0,
-      info: `Temperature ${c.v.temp.toFixed(1)} °C`,
+      level: Math.max(L.temp || 0, pImmune.level),
+      info: `Temperature ${c.v.temp.toFixed(1)} °C` + (pImmune.note ? ` · ${pImmune.note}` : ''),
     },
     {
       id: 'bone', short: 'Bone', title: 'Bone and muscle',

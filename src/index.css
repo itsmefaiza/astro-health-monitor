@@ -51,3 +51,4 @@ input[type="number"] { font: inherit; background: var(--panel); color: var(--tex
   .content { padding: 0; }
   .card { break-inside: avoid; border: 1px solid #999; }
 }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
