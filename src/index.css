@@ -116,3 +116,4 @@ body:has(.demo) .content { padding-bottom: 220px; }
   .content { padding: 0; max-width: none; }
   .card { break-inside: avoid; border: 1px solid #999; }
 }
+.card a { color: var(--accent); }

@@ -1,5 +1,7 @@
+import { useEffect, useRef } from 'react'
 import { Routes, Route, NavLink } from 'react-router-dom'
 import { useCrew } from './context/CrewContext'
+import { addPacket, processQueue } from './utils/ground'
 import Demo from './components/Demo'
 import TopBar from './components/TopBar'
 import Dashboard from './pages/Dashboard'
@@ -12,17 +14,33 @@ import Wellness from './pages/Wellness'
 import Symptoms from './pages/Symptoms'
 import Crew from './pages/Crew'
 import Alerts from './pages/Alerts'
+import Ground from './pages/Ground'
 import Report from './pages/Report'
+import Sources from './pages/Sources'
 
 const GROUPS = [
   ['Monitor', [['/', 'Dashboard', true], ['/health', 'Health status'], ['/baseline', 'My baseline'], ['/vitals', 'Vitals']]],
   ['Body and mind', [['/radiation', 'Radiation'], ['/sleep', 'Sleep'], ['/wellness', 'Wellness'], ['/symptoms', 'Symptoms']]],
-  ['Crew', [['/crew', 'Crew overview'], ['/alerts', 'Alerts'], ['/report', 'Report']]],
+  ['Crew', [['/crew', 'Crew overview'], ['/alerts', 'Alerts'], ['/ground', 'Ground link'], ['/report', 'Report']]],
+  ['About', [['/sources', 'Sources']]],
 ]
 
 export default function App() {
   const { crew, selected, setSelected } = useCrew()
   const alerting = crew.filter(c => c.lv === 2)
+  const wasAlert = useRef(false)
+
+  // queue a health packet for ground when a crew alert starts
+  useEffect(() => {
+    if (alerting.length > 0 && !wasAlert.current) alerting.forEach(c => addPacket(c, 'Alert'))
+    wasAlert.current = alerting.length > 0
+  })
+
+  // move queued packets forward every second
+  useEffect(() => {
+    const id = setInterval(processQueue, 1000)
+    return () => clearInterval(id)
+  }, [])
 
   return (
     <div className="layout">
@@ -64,7 +82,9 @@ export default function App() {
           <Route path="/symptoms" element={<Symptoms />} />
           <Route path="/crew" element={<Crew />} />
           <Route path="/alerts" element={<Alerts />} />
+          <Route path="/ground" element={<Ground />} />
           <Route path="/report" element={<Report />} />
+          <Route path="/sources" element={<Sources />} />
           <Route path="*" element={<Dashboard />} />
         </Routes>
       </main>

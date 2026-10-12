@@ -26,8 +26,7 @@ export default function Health() {
 
   const exShown = exercise ?? 120
   const base = (MISSION_DAY / 30) * 1.5
-  const factor = 1 - (Math.min(exShown, 150) / 150) * 0.8
-
+  const factor = 1 - (Math.min(exShown, 120) / 120) * 0.35
   return (
     <div>
       <h1>Health status</h1>
@@ -84,7 +83,7 @@ export default function Health() {
         <div className="example">
           <b>Worked example: bone loss estimate</b> (illustrative model, not clinical)<br />
           Without exercise: ({MISSION_DAY} ÷ 30) × 1.5% = {base.toFixed(1)}%<br />
-          With {exShown} min/day: {base.toFixed(1)}% × (1 − 0.8 × {exShown} ÷ 150) = {base.toFixed(1)}% × {factor.toFixed(2)} = <b>{(base * factor).toFixed(1)}%</b>
+          With {exShown} min/day: {base.toFixed(1)}% × (1 − 0.35 × {Math.min(exShown, 120)} ÷ 120) = {base.toFixed(1)}% × {factor.toFixed(2)} = <b>{(base * factor).toFixed(1)}%</b>
         </div>
       </div>
 

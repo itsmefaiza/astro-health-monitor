@@ -15,6 +15,7 @@ const STEPS = [
   { path: '/symptoms', secs: 7, run: 'symptoms', title: 'Self-reported symptoms', text: 'Sensors cannot feel a headache. Amara reports a moderate headache and mild dizziness.' },
   { path: '/health', secs: 7, title: 'Symptoms join the picture', text: 'Her symptoms move the heart area to Watch and add tips, like checking cabin CO₂ and ventilation.' },
   { path: '/crew', secs: 6, title: 'Ground control view', text: 'The whole crew on one screen, with a status for every health area.' },
+    { path: '/ground', secs: 7, title: 'Works when Earth is far', text: 'Health packets are stored on board and synced to ground when the link is up. The crew never waits for Earth to be told they are in trouble.' },
   { path: '/report', secs: 6, title: 'One-click report', text: 'A print-ready report for the flight surgeon, saved as a PDF.' },
   { path: '/', secs: 6, title: 'Built for deep space', text: 'Simulated data today, real sensors tomorrow. It installs on a phone and works offline, which matters when messages to Earth are slow.' },
 ]

@@ -96,10 +96,9 @@ export function assess(c) {
   const exercise = getExercise(c.name)
   const avgSleep = c.sleep.reduce((a, b) => a + b, 0) / c.sleep.length
   const dosePct = (c.dose / DOSE_LIMIT) * 100
-  const boneLoss = exercise === null ? null : (MISSION_DAY / 30) * 1.5 * (1 - (Math.min(exercise, 150) / 150) * 0.8)
-
-  const exLevel = exercise === null ? 1 : exercise < 45 ? 2 : exercise < 90 ? 1 : 0
-  const sleepLevel = avgSleep < 6 ? 2 : avgSleep < 7 ? 1 : 0
+const boneLoss = exercise === null ? null : (MISSION_DAY / 30) * 1.5 * (1 - (Math.min(exercise, 120) / 120) * 0.35)
+const exLevel = exercise === null ? 1 : exercise < 60 ? 2 : exercise < 120 ? 1 : 0
+const sleepLevel = avgSleep < 6 ? 2 : avgSleep < 7 ? 1 : 0
   const stressLevel = stress === null ? 0 : stress >= 7 ? 2 : stress >= 5 ? 1 : 0
 
   const dev = deviations(c)
