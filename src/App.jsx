@@ -11,6 +11,7 @@ import Alerts from './pages/Alerts'
 import Report from './pages/Report'
 import Baseline from './pages/Baseline'
 import Symptoms from './pages/Symptoms'
+   import Demo from './components/Demo'
 export default function App() {
   const { crew, selected, setSelected } = useCrew()
   const alerting = crew.filter(c => c.lv === 2)
@@ -23,6 +24,7 @@ export default function App() {
         <select id="crew" value={selected} onChange={e => setSelected(+e.target.value)}>
           {crew.map((c, i) => <option key={c.name} value={i}>{c.name}</option>)}
         </select>
+        <Demo />
         <NavLink to="/" end>Dashboard</NavLink>
         <NavLink to="/health">Health status</NavLink>
         <NavLink to="/baseline">My baseline</NavLink>

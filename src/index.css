@@ -55,3 +55,12 @@ button:disabled { opacity: 0.5; cursor: not-allowed; }
 .symrow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--line); }
 .sev { padding: 4px 10px; font-size: 13px; }
 .sev[aria-pressed="true"] { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.demo-start { background: var(--accent); color: #06101f; border-color: transparent; font-weight: 600; }
+.demo { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; width: min(720px, calc(100% - 32px)); background: var(--panel); border: 1px solid var(--accent); border-radius: 14px; padding: 12px 16px; z-index: 50; box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45); }
+.demo-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.demo p { margin: 6px 0 8px; }
+.demo-bar { height: 4px; background: var(--line); border-radius: 4px; overflow: hidden; }
+.demo-bar i { display: block; height: 100%; background: var(--accent); animation: demofill linear forwards; }
+@keyframes demofill { from { width: 0; } to { width: 100%; } }
+body:has(.demo) .content { padding-bottom: 220px; }
+@media print { .demo, .demo-start { display: none !important; } }
