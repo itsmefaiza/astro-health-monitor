@@ -7,6 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+            workbox: { globPatterns: ['**/*.{js,css,html,png,svg,woff,woff2}'] },
       manifest: {
         name: 'Astro Health Monitor',
         short_name: 'AstroHealth',
