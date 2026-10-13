@@ -74,4 +74,4 @@ Real wearable and cabin sensor input, on-device machine learning for personal ba
 
 ## Credits
 
-Built by Faiza . NASA and Canadian Space Agency public resources were used for reference values.
+Built by Faiza. NASA and Canadian Space Agency public resources were used for reference values.
